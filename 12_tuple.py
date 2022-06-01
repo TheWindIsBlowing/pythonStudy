@@ -49,3 +49,5 @@ print(tup, tup1)
 tupTemp = (10, 20, [50, "gg"], False, {})
 for item in tupTemp:
     print(item)
+
+print(tupTemp[0])
