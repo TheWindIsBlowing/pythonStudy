@@ -38,5 +38,5 @@ print(pi)
 
 # 导入自定义的模块
 # improt 23_module2  模块名不符合规范
-import calc
-print(calc.add(100, 200))
+import calc  # 这里并没有运行calc中 以主程序方式运行的代码
+print(calc.add(10, 200))

@@ -2,6 +2,7 @@
 '''
 通常，在python 文件，尤其是包含中文的python文件中，需要说明你的Python源程序文件使用的编码；
 如果未声明，程序默认使用ascii码来写，此时，书写中文的话python解释器一般会报错。
+pyCharm python文件默认编码为utf-8
 
 常见的编码声明：
 # coding=utf-8
