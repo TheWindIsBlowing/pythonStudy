@@ -1,3 +1,6 @@
+import os.path
+import student
+
 menuLst = ["退出系统啊啊",
            "录入学生信息",
            "查找学生信息",
@@ -24,7 +27,43 @@ def getChoiceMenu():
         return "0", "输入错误，请输入1-8的数字：\n"
 
 def insertInfo():
-    pass
+    stuLst = []
+    while True:
+        stuId = int(input("请输入学生学号（1001-999）：\n"))
+        stuName = input("请输入学生姓名：\n")
+        englishScore = int(input("请输入学生英语成绩：\n"))
+        pythonScore = int(input("请输入学生Python成绩：\n"))
+        javaScore = int(input("请输入学生java成绩：\n"))
+        stu = student.Student(stuId, stuName, englishScore, pythonScore, javaScore)
+        stuLst.append(stu.showInfo())
+
+        isEnd = False
+        while True:
+            continueInsert = input("继续插入学生信息吗？（Y / N）：")
+            if continueInsert == "Y" or continueInsert == "y":
+                break
+            elif continueInsert == "N" or continueInsert == "n":
+                isEnd = True
+                break
+            else:
+                print("输入有误，请输入（Y / N）：")
+                continue
+
+        if isEnd:
+            saveInfo(stuLst)
+            break
+
+def saveInfo(stuLst):
+    print(stuLst)
+    print("save stu info")
+    # with open("./studentInfo.txt", "r") as rStuInfo:
+    #     print(rStuInfo)
+    #     with open("./studentInfo.txt", "w") as wStuInfo:
+    #         wStuInfo.write(rStuInfo)
+    #         wStuInfo.write()
+    #         for item in stuInfo:
+    #             print(eval(item))
+
 def searchInfo():
     pass
 def deleteInfo():

@@ -10,5 +10,9 @@ class Student:
         self.totalScore = enScore + pyScore + jaScore
 
     def showInfo(self):
-        print(
-            f"{self.stuId}\t{self.stuName}\t{self.englishScore}\t{self.pythonScore}\t{self.javaScore}\t{self.totalScore}")
+        print(f"{self.stuId}\t{self.stuName}\t{self.englishScore}\t{self.pythonScore}\t{self.javaScore}\t{self.totalScore}")
+        return {"stuId": self.stuId,
+                "stuName": self.stuName,
+                "englishScore": self.englishScore,
+                "pythonScore": self.pythonScore,
+                "javaScore": self.javaScore}
