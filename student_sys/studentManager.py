@@ -1,6 +1,18 @@
 import os.path
 import student
 
+stuInfoFileName = "./studentInfo.txt"
+stuTxt = open(stuInfoFileName, "r", encoding="utf-8")
+inFileStuInfo = []
+currStuId = -1
+for item in stuTxt.readlines():
+    inFileStuInfo.append(item)
+    if eval(item).get("stuId") > currStuId:
+        currStuId = eval(item).get("stuId")
+    print(item, end="")
+stuTxt.close()
+print(f"currStuId: {currStuId}")
+
 menuLst = ["退出系统啊啊",
            "录入学生信息",
            "查找学生信息",
@@ -29,12 +41,15 @@ def getChoiceMenu():
 def insertInfo():
     stuLst = []
     while True:
-        stuId = int(input("请输入学生学号（1001-999）：\n"))
-        stuName = input("请输入学生姓名：\n")
-        englishScore = int(input("请输入学生英语成绩：\n"))
-        pythonScore = int(input("请输入学生Python成绩：\n"))
-        javaScore = int(input("请输入学生java成绩：\n"))
-        stu = student.Student(stuId, stuName, englishScore, pythonScore, javaScore)
+        try:
+            stuName = input("请输入学生姓名：\n")
+            englishScore = float(input("请输入学生英语成绩：\n"))
+            pythonScore = float(input("请输入学生Python成绩：\n"))
+            javaScore = float(input("请输入学生java成绩：\n"))
+        except:
+            print("输入的信息有误，请按照提示重新输入\n")
+            continue
+        stu = student.Student(++currStuId, stuName, englishScore, pythonScore, javaScore)
         stuLst.append(stu.showInfo())
 
         isEnd = False
@@ -54,15 +69,12 @@ def insertInfo():
             break
 
 def saveInfo(stuLst):
-    print(stuLst)
-    print("save stu info")
-    # with open("./studentInfo.txt", "r") as rStuInfo:
-    #     print(rStuInfo)
-    #     with open("./studentInfo.txt", "w") as wStuInfo:
-    #         wStuInfo.write(rStuInfo)
-    #         wStuInfo.write()
-    #         for item in stuInfo:
-    #             print(eval(item))
+    print(f"你一共插入了{len(stuLst)}条学生信息：\n")
+    with open(stuInfoFileName, "a", encoding="utf-8") as stuInfo:
+        for item in stuLst:
+            writeInfo = str(item) + "\n"
+            print(writeInfo)
+            stuInfo.write(writeInfo)
 
 def searchInfo():
     pass
