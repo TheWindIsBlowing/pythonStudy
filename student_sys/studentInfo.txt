@@ -1,2 +1,4 @@
 {'stuId': 1001, 'stuName': '张三', 'englishScore': 89.0, 'pythonScore': 78.0, 'javaScore': 56.5}
 {'stuId': 1002, 'stuName': '李四', 'englishScore': 59.5, 'pythonScore': 89.0, 'javaScore': 95.0}
+{'stuId': 1002, 'stuName': '鼠标', 'englishScore': 59.0, 'pythonScore': 56.0, 'javaScore': 78.0}
+{'stuId': 1002, 'stuName': '键盘', 'englishScore': 45.0, 'pythonScore': 55.0, 'javaScore': 60.0}
