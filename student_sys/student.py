@@ -1,6 +1,8 @@
 
 # 学生模块
 class Student:
+    currStuId = -1
+
     def __init__(self, stuId, stuName, enScore, pyScore, jaScore):
         self.stuId = stuId
         self.stuName = stuName

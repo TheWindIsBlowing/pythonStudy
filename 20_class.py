@@ -110,3 +110,5 @@ def func(animal):
 func(Dog())
 func(Cat())
 func(Monster())
+
+print(Student.nativeAddr)

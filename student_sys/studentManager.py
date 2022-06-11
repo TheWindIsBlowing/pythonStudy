@@ -1,17 +1,16 @@
-import os.path
-import student
+from student import Student
 
 stuInfoFileName = "./studentInfo.txt"
 stuTxt = open(stuInfoFileName, "r", encoding="utf-8")
 inFileStuInfo = []
-currStuId = -1
+
 for item in stuTxt.readlines():
     inFileStuInfo.append(eval(item))
-    if eval(item).get("stuId") > currStuId:
-        currStuId = eval(item).get("stuId")
+    if eval(item).get("stuId") > Student.currStuId:
+        Student.currStuId = eval(item).get("stuId")
     print(item, end="")
 stuTxt.close()
-print(f"currStuId: {currStuId}")
+print(f"currStuId: {Student.currStuId}")
 
 menuLst = ["退出系统啊啊",
            "录入学生信息",
@@ -24,7 +23,6 @@ menuLst = ["退出系统啊啊",
 
 
 def showMenu():
-    print()
     print("===============================学生管理系统================================")
     print("==                              功能菜单                                ==")
     for i in range(1, len(menuLst) + 1):
@@ -50,7 +48,8 @@ def insertInfo():
         except:
             print("输入的信息有误，请按照提示重新输入\n")
             continue
-        stu = student.Student(++currStuId, stuName, englishScore, pythonScore, javaScore)
+        Student.currStuId = Student.currStuId + 1
+        stu = Student(Student.currStuId, stuName, englishScore, pythonScore, javaScore)
         stuLst.append(stu.showInfo())
 
         isEnd = False
@@ -78,13 +77,89 @@ def saveInfo(stuLst):
             print(writeInfo)
             stuInfo.write(writeInfo)
     print(inFileStuInfo)
+def checkHaveStu(searchBy, searchVaule):
+    res = []
+    searchKey = "stuId"
+    if(searchBy == 1):
+        searchKey = "stuName"
+    for item in inFileStuInfo:
+        if(item[searchKey] == searchVaule):
+            res.append(item)
 
+    return res
 def searchInfo():
-    pass
+    while True:
+        searchBy = int(input("请选择按学号（0）、或按姓名查询（1）：\n"))
+        if(searchBy != 0 and searchBy != 1):
+            print("输入有误，请输入0或者1\n")
+            continue
+        searchValue = ""
+        if(searchBy == 0):
+            searchValue = int(input("请输入学号：\n"))
+        else:
+            searchValue = input("请输入姓名：\n")
+        res = checkHaveStu(searchBy, searchValue)
+        print(res)
+        if(len(res) <= 0):
+            print(f"没有找到该学生信息，searchBy = {searchBy}，searchValue = {searchValue}\n")
+        else:
+            print("找到学生信息如下：\n")
+            for item in res:
+                print(f"stuId:{item.get('stuId')}, stuName:{item.get('stuName')}, englishScore:{item.get('englishScore')}, pythonScore:{item.get('pythonScore')}, javaScore:{item.get('javaScore')}")
+        break
 def deleteInfo():
-    pass
+    while True:
+        showAllInfo()
+        delName = input("请输入要删除的姓名（返回上一步请输入0）：\n")
+        if(delName == "0"):
+            break
+        delLst = checkHaveStu(1, delName)
+        if(len(delLst) <= 0):
+            print(f"没有找到该学生信息：delName = {delName}：")
+            continue
+        else:
+            delNameLst = [item.get('stuName') for item in delLst]
+            for item in inFileStuInfo:
+                if(item.get('stuName') in delNameLst):
+                    inFileStuInfo.remove(item)
+                    print("成功删除：", item)
+            with open(stuInfoFileName, "w", encoding="utf-8") as stuInfo:
+                for item in inFileStuInfo:
+                    writeInfo = str(item) + "\n"
+                    stuInfo.write(writeInfo)
+            break
+
 def modifyInfo():
-    pass
+    while True:
+        showAllInfo()
+        modifyName= input("请输入要修改的姓名（返回上一步请输入0）：\n")
+        if(modifyName == "0"):
+            break
+        modLst = checkHaveStu(1, modifyName)
+        if(len(modLst) <= 0):
+            print(f"没有找到该学生信息：modName = {modifyName}")
+            continue
+        else:
+            try:
+                stuName = input("请输入学生姓名：\n")
+                englishScore = float(input("请输入学生英语成绩：\n"))
+                pythonScore = float(input("请输入学生Python成绩：\n"))
+                javaScore = float(input("请输入学生java成绩：\n"))
+            except:
+                print("输入的信息有误，请按照提示重新输入\n")
+                continue
+            for item in inFileStuInfo:
+                if(item.get('stuName') == modifyName):
+                    item["stuName"] = stuName
+                    item["englishScore"] = englishScore
+                    item["pythonScore"] = pythonScore
+                    item["javaScore"] = javaScore
+            showAllInfo()
+            with open(stuInfoFileName, "w", encoding="utf-8") as stuInfo:
+                for item in inFileStuInfo:
+                    writeInfo = str(item) + "\n"
+                    stuInfo.write(writeInfo)
+            break
 def sortInfo():
     while True:
         sortChoice = int(input("请选择按升序（0）、或降序（1）排序：\n"))
@@ -105,11 +180,16 @@ def sortInfo():
                                reverse=True if sortChoice == 0 else False)
 
         showAllInfo()
+        with open(stuInfoFileName, "w", encoding="utf-8") as stuInfo:
+            for item in inFileStuInfo:
+                writeInfo = str(item) + "\n"
+                stuInfo.write(writeInfo)
         break
 
 def countInfo():
     print(f"所有学生人数： {len(inFileStuInfo)}")
 def showAllInfo():
+    print("所有学生信息：")
     for item in inFileStuInfo:
         print(item)
 
