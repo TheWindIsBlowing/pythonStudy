@@ -23,11 +23,11 @@ menuLst = ["退出系统啊啊",
 
 
 def showMenu():
-    print("===============================学生管理系统================================")
+    print("学生管理系统".center(68, "="))
     print("==                              功能菜单                                ==")
     for i in range(1, len(menuLst) + 1):
-        print(f"==                           {str(i)}.{menuLst[i - 1]}                              ==")
-    print("=================================end=====================================")
+        print(f"==                           {str(i)}.{menuLst[i - 1]}                             ==")
+    print("".center(74, "="))
 
 
 def getChoiceMenu():
